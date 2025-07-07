@@ -10,7 +10,7 @@ public class AddUser {
         this.dataSource = dataSource;
     }
 
-    private final String sql = "INSERT INTO users (login, password, dateofbirth, fio) " +
+    private final String sql = "INSERT INTO users (login, password, date_birth, fio) " +
             "VALUES (?, ?, ?, ?) RETURNING id";
 
     private final String checkSql = "SELECT 1 FROM users WHERE login = ?";

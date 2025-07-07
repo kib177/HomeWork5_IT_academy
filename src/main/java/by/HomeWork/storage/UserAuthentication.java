@@ -14,7 +14,7 @@ public class UserAuthentication {
     }
 
     public User authenticate(String login, String password) throws SQLException {
-        String sql = "SELECT fio, dateofbirth, created_at, id_role "
+        String sql = "SELECT fio, date_birth, created_at, id_role "
                 + "FROM users WHERE login = ? AND password = ?";
 
         try (Connection connection = dataSource.getConnection();
