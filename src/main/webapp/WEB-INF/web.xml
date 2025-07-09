@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>RegServlet</servlet-name>
-        <servlet-class>by.HomeWork.controller.UserServlet</servlet-class>
+        <servlet-class>by.HomeWork.controller.UserRegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegServlet</servlet-name>
@@ -41,5 +41,10 @@
         <servlet-name>MesServlet</servlet-name>
         <url-pattern>/ui/message</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>by.HomeWork.service.ActiveUsersListener</listener-class>
+    </listener>
+
 
 </web-app>

@@ -12,7 +12,7 @@
         <h1>Добро пожаловать</h1>
     </header>
 
-    <jsp:include page="pipa/href.jsp"></jsp:include>
+    <jsp:include page="../views/pipa/href.jsp"></jsp:include>
     <div class="content">
         <p class="welcome">Главная страница веб-приложения</p>
         <p>Контекст приложения: ${pageContext.request.contextPath}</p>

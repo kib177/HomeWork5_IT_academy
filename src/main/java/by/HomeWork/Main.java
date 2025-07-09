@@ -1,24 +1,21 @@
 package by.HomeWork;
 
-import by.HomeWork.dto.Message;
-import by.HomeWork.storage.AddUser;
-import by.HomeWork.storage.GetMessage;
-import by.HomeWork.storage.SendMessage;
 
-import java.sql.Date;
+import by.HomeWork.dto.Message;
+import by.HomeWork.storage.MessageRepository;
+
 import java.sql.SQLException;
+
 import java.util.List;
 
-import static by.HomeWork.service.Connection.getDataSource;
+import static by.HomeWork.database.Connection.getDataSource;
+
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        SendMessage sendMessage = new SendMessage(getDataSource());
-        sendMessage.saveMessage("kirill", "kirill123", "kirill");
-
-        AddUser addUser = new AddUser(getDataSource());
-        addUser.registerUser("kirill123", "brigi", Date.valueOf("2025-01-01"), "brigi kirill");
-
+        MessageRepository messageRepository = new MessageRepository(getDataSource());
+        List<Message> messages = messageRepository.findByRecipient("admin");
+        System.out.println(messages);
 
     }
 }

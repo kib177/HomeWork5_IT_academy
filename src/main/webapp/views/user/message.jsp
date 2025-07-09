@@ -53,7 +53,7 @@
 
 <h1>Отправить сообщение</h1>
 <div class="form-container">
-    <form action="message" method="post">
+    <form action="${pageContext.request.contextPath}/api/message" method="post">
         <div class="form-group">
             <label for="recipient">Логин получателя:</label>
             <input type="text" id="recipient" name="recipient" required>

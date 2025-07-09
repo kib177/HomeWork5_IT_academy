@@ -1,25 +1,30 @@
 package by.HomeWork.dto;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class User {
     private String login;
     private String password;
     private String FIO;
-    private Date dateOfBirth;
-    private LocalDateTime dateOfRegistration;
-    private int role;
+    private Date dateBirth;
+    private Timestamp DateRegistration;
+    private Role role;
 
-    // для дат поменять на localdate
-
-    public User(String login, String password, String FIO,
-                Date dateOfBirth, LocalDateTime dateOfRegistration, int role) {
+    public User(String login, String password, String FIO, Date dateOfBirth, Timestamp DateRegistration, Role role) {
         this.login = login;
         this.password = password;
         this.FIO = FIO;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfRegistration = dateOfRegistration;
+        this.dateBirth = dateOfBirth;
+        this.DateRegistration = DateRegistration;
+        this.role = role;
+    }
+
+    public User (String login, String password, String FIO, Date dateOfBirth, Role role) {
+        this.login = login;
+        this.password = password;
+        this.FIO = FIO;
+        this.dateBirth = dateOfBirth;
         this.role = role;
     }
 
@@ -42,15 +47,19 @@ public class User {
         return FIO;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public Date getDateBirth() {
+        return dateBirth;
     }
 
-    public LocalDateTime getDateOfRegistration() {
-        return dateOfRegistration;
+    public Timestamp getDateRegistration() {
+        return DateRegistration;
     }
 
-    public int getRole() {
+    public Role getRole() {
         return role;
+    }
+
+    public enum Role {
+        USER, ADMIN
     }
 }

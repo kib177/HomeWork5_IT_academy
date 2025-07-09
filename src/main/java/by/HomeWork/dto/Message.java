@@ -19,6 +19,12 @@ public class Message {
         this.text = text;
     }
 
+    public Message(User sender, User recipient, String text) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.text = text;
+    }
+
     public Timestamp getTimeSend() {
         return timeSend;
     }

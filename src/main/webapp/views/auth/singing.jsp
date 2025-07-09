@@ -72,7 +72,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="pipa/href.jsp"></jsp:include>
+<jsp:include page="../../views/pipa/href.jsp"></jsp:include>
 <div class="login-container">
     <h2>Вход в систему</h2>
 
@@ -81,7 +81,7 @@
         <div class="error">${error}</div>
     </c:if>
 
-    <form action="login" method="POST">
+    <form action="${pageContext.request.contextPath}/api/login" method="POST">
         <div class="form-group">
             <label for="login">Логин:</label>
             <input type="text" id="login" name="login" required>

@@ -81,11 +81,11 @@
 </head>
 <body>
 
-<jsp:include page="pipa/href.jsp"></jsp:include>
+<jsp:include page="../../views/pipa/href.jsp"></jsp:include>
 
 <div class="container">
     <h1>Создать аккаунт</h1>
-    <form action="user" method="post">
+    <form action="${pageContext.request.contextPath}/api/user" method="post">
         <div class="form-group">
             <label for="login">Имя пользователя:</label>
             <input type="text" id="login" name="login" required>
@@ -102,8 +102,8 @@
         </div>
 
         <div class="form-group">
-            <label for="dateOfBirth">Введите дату рождения</label>
-            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+            <label for="date_birth">Введите дату рождения</label>
+            <input type="date" id="date_birth" name="date_birth" required>
         </div>
 
         <div class="form-group">
@@ -122,7 +122,7 @@
     </form>
 
     <div class="login-link">
-        Уже есть аккаунт? <a href="${pageContext.request.contextPath}/login">Войти</a>
+        Уже есть аккаунт? <a href="${pageContext.request.contextPath}/api/login">Войти</a>
     </div>
 </div>
 
