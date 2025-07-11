@@ -1,17 +1,15 @@
 package by.HomeWork.dto;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Message {
     private Timestamp timeSend;
-    private User sender;
-    private User recipient;
-    private String text;
+    private final User sender;
+    private final User recipient;
+    private final String text;
 
-
-    // для дат поменять на localdate
-
-    public Message(Timestamp timeSend, User sender,
+    private Message(Timestamp timeSend, User sender,
                    User recipient, String text) {
         this.timeSend = timeSend;
         this.sender = sender;
@@ -19,7 +17,7 @@ public class Message {
         this.text = text;
     }
 
-    public Message(User sender, User recipient, String text) {
+    private Message(User sender, User recipient, String text) {
         this.sender = sender;
         this.recipient = recipient;
         this.text = text;
@@ -42,6 +40,18 @@ public class Message {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(timeSend, message.timeSend) && Objects.equals(sender, message.sender) && Objects.equals(recipient, message.recipient) && Objects.equals(text, message.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timeSend, sender, recipient, text);
+    }
+
+    @Override
     public String toString() {
         return "Message{" +
                 "timeSend=" + timeSend +
@@ -50,4 +60,49 @@ public class Message {
                 ", text='" + text + '\'' +
                 '}';
     }
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Timestamp timeSend;
+        private User sender;
+        private User recipient;
+        private String text;
+
+        public Builder timeSend(Timestamp timeSend) {
+            this.timeSend = timeSend;
+            return this;
+        }
+
+        public Builder sender(User sender) {
+            this.sender = sender;
+            return this;
+        }
+
+        public Builder recipient(User recipient) {
+            this.recipient = recipient;
+            return this;
+        }
+
+        public Builder text(String text) {
+            this.text = text;
+            return this;
+        }
+
+        public Message build() {
+            // Проверяем поля
+            if (sender == null || recipient == null || text == null) {
+                throw new IllegalArgumentException("Sender, recipient, and text must be set");
+            }
+
+            // выбираю конструктор в зависимости от задачи
+            if (timeSend != null) {
+                return new Message(timeSend, sender, recipient, text);
+            } else {
+                return new Message(sender, recipient, text);
+            }
+        }
+    }
+
 }

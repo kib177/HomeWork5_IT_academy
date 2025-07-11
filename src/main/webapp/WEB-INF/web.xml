@@ -5,6 +5,7 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+
     <servlet>
         <servlet-name>RootServlet</servlet-name>
         <servlet-class>by.HomeWork.controller.RootServlet</servlet-class>
@@ -31,15 +32,6 @@
     <servlet-mapping>
         <servlet-name>RegServlet</servlet-name>
         <url-pattern>/ui/singUp</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>MesServlet</servlet-name>
-        <servlet-class>by.HomeWork.controller.MessageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MesServlet</servlet-name>
-        <url-pattern>/ui/message</url-pattern>
     </servlet-mapping>
 
     <listener>

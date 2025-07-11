@@ -12,14 +12,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static by.HomeWork.database.Connection.getDataSource;
 
 @WebServlet("/api/message")
 public class MessageServlet extends HttpServlet {
-    private final UserRepository userRepository = new UserRepository(getDataSource());
-    private final MessageRepository messageRepository = new MessageRepository(getDataSource());
-
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         /*HttpSession session = req.getSession(false);
@@ -29,32 +28,32 @@ public class MessageServlet extends HttpServlet {
         }*/
 
         User currentUser = (User) req.getSession().getAttribute("user");
-        if (currentUser == null) {
-            resp.sendRedirect("views/user/singing.jsp"); // Перенаправление на логин
-            return;
-        }
-        MessageRepository messageRepository1 = new MessageRepository(getDataSource());
-        List<Message> messages = messageRepository1.findByRecipient(currentUser.getLogin());
-        req.setAttribute("list", messages);
+        UserRepository user = new UserRepository(getDataSource());
+        MessageRepository messageRepository = new MessageRepository(getDataSource(), user);
+        List<Message> messages = messageRepository.findByRecipient(currentUser.getLogin());
+        req.setAttribute("listMessage", messages);
         req.getRequestDispatcher("/views/user/chats.jsp").forward(req, resp);
+
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User fromUser = (User) req.getSession().getAttribute("user");
-        String recipient = req.getParameter("recipient");
-        String text = req.getParameter("message");
 
-        User toUser = userRepository.findByLogin(recipient).get();
-        if (toUser == null) {
+        UserRepository userRepository = new UserRepository(getDataSource());
+        MessageRepository messageRepository = new MessageRepository(getDataSource(), userRepository);
+
+        Optional<User> recipient = userRepository.findByLogin(req.getParameter("recipient"));
+        if (recipient.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Recipient not found");
             return;
         }
 
-        Message message = new Message(
-                fromUser, toUser, text
-        );
+        messageRepository.save(Message.builder()
+                .sender((User) req.getSession().getAttribute("user"))
+                .recipient(recipient.get())
+                .text(req.getParameter("message"))
+                .build());
 
-        messageRepository.save(message);
         resp.sendRedirect(req.getContextPath() + "/views/user/message.jsp");
     }
 }

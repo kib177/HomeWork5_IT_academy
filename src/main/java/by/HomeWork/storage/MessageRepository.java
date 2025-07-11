@@ -1,79 +1,71 @@
 package by.HomeWork.storage;
 
 import by.HomeWork.dto.Message;
-import by.HomeWork.service.api.exception.StorageException;
+import by.HomeWork.dto.User;
+
+import by.HomeWork.storage.api.AbstractRepository;
+import by.HomeWork.storage.api.IMessageRepository;
+
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MessageRepository {
-    private static final List<Message> messages = new ArrayList<>();
-    private final DataSource dataSource;
+public class MessageRepository extends AbstractRepository<Message> implements IMessageRepository {
+    private final UserRepository userRepository;
 
-    public MessageRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public MessageRepository(DataSource dataSource, UserRepository userRepository) {
+        super(dataSource);
+        this.userRepository = userRepository;
     }
 
+    @Override
     public void save(Message message) {
-        String sql = "INSERT INTO messages (sender, recipient, text) VALUES (?, ?, ?)";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, message.getSender().getLogin());
-            stmt.setString(2, message.getRecipient().getLogin());
-            stmt.setString(3, message.getText());
-            stmt.executeUpdate();
-        }catch (SQLException e) {
-            throw new StorageException(e);
-        }
+        String sql = "INSERT INTO messages (sender, recipient, text, sent_datetime) VALUES (?, ?, ?, ?)";
+        update(sql,
+                message.getSender().getLogin(),
+                message.getRecipient().getLogin(),
+                message.getText(),
+                new Timestamp(System.currentTimeMillis())
+        );
     }
 
-
-    public List<Message> findByRecipient(String recipient) {
-        List<Message> messages = new ArrayList<>();
-        String sql = "SELECT m.*, u1.login AS from_name, u2.login AS to_name " +
-                "FROM messages m " +
-                "JOIN users u1 ON m.sender = u1.login " +
-                "JOIN users u2 ON m.recipient = u2.login " +
-                "WHERE m.recipient = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, recipient);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                messages.add(mapMessage(rs));
-            }
-        } catch (SQLException e) {
-            throw new StorageException(e);
-        }
-        return messages;
-    }
-
+    @Override
     public List<Message> getAll() {
-        List<Message> messages = new ArrayList<>();
-        String sql = "SELECT * FROM messages";
-        try (Connection connection = dataSource.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                messages.add(mapMessage(rs));
-            }
-        }catch (SQLException e) {
-            throw new StorageException(e);
-        }
-        return messages;
+        return query("SELECT * FROM messages", this::mapMessage);
+    }
+
+    @Override
+    public List<Message> findByRecipient(String recipient) {
+        String sql = "SELECT * FROM messages WHERE recipient = ?";
+        return query(sql, this::mapMessage, recipient);
     }
 
     private Message mapMessage(ResultSet rs) throws SQLException {
-        UserRepository userRepository = new UserRepository(dataSource);
+        User sender = userRepository.findByLogin(rs.getString("sender"))
+                .orElseThrow(() -> {
+                    try {
+                        return new SQLException("Sender not found: " + rs.getString("sender"));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
-        Message message = new Message(
-                rs.getTimestamp("sent_datetime"),
-                userRepository.findByLogin(rs.getString("sender")).get(),
-                userRepository.findByLogin(rs.getString("recipient")).get(),
-                rs.getString("text"));
-        return message;
+        User recipient = userRepository.findByLogin(rs.getString("recipient"))
+                .orElseThrow(() -> {
+                    try {
+                        return new SQLException("Recipient not found: " + rs.getString("recipient"));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+        return Message.builder()
+                .timeSend(rs.getTimestamp("sent_datetime"))
+                .sender(sender)
+                .recipient(recipient)
+                .text(rs.getString("text"))
+                .build();
     }
 }
 

@@ -13,6 +13,7 @@ import static by.HomeWork.database.Connection.getDataSource;
 
 @WebServlet("/api/login")
 public class LoginServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");

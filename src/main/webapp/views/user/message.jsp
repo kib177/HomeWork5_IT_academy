@@ -44,13 +44,14 @@
             background: #45a049;
         }
     </style>
+    <jsp:include page="../pipa/styleNavbar.jsp"></jsp:include>
 </head>
 <body>
 <!-- Блок для отображения ошибок -->
 <c:if test="${not empty error}">
     <div class="error">${error}</div>
 </c:if>
-
+<jsp:include page="../../views/pipa/href.jsp"></jsp:include>
 <h1>Отправить сообщение</h1>
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/api/message" method="post">
@@ -63,6 +64,7 @@
             <textarea id="message" name="message" rows="5" required></textarea>
         </div>
         <button type="submit">Отправить</button>
+
     </form>
 </div>
 </body>
