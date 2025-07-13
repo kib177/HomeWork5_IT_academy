@@ -1,0 +1,64 @@
+package by.HomeWork.filter;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
+
+@WebFilter("/ui/*")
+public class JspFilter implements Filter {
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest request = (HttpServletRequest) req;
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+
+        if (path.startsWith("/ui/")) {
+            String jspPath = null;
+            ServletContext context = request.getServletContext();
+
+            // Обработка конкретных маршрутов
+            switch (path) {
+                case "/ui/":
+                case "/ui":
+                    jspPath = "/WEB-INF/jsp/views/home.jsp";
+                    break;
+                case "/ui/signIn":
+                    jspPath = "/WEB-INF/jsp/views/auth/signIn.jsp";
+                    break;
+                case "/ui/signUp":
+                    jspPath = "/WEB-INF/jsp/views/auth/signUp.jsp";
+                    break;
+                case "/ui/user/messages":
+                    jspPath = "/WEB-INF/jsp/views/user/message.jsp";
+                    break;
+                case "/ui/user/chats":
+                    req.getRequestDispatcher("/api/message").forward(req, res);
+                    return;
+                case "/ui/admin/statistics":
+                    // Обработка через сервлет
+                    req.getRequestDispatcher("/api/admin/statistics").forward(req, res);
+                    return;
+            }
+
+            // Для динамических путей пользователя
+            if (jspPath == null && path.startsWith("/ui/user/")) {
+                String viewName = path.substring(9); // /ui/user/xxx -> xxx
+                String candidatePath = "/WEB-INF/jsp/views/user/" + viewName + ".jsp";
+                if (context.getResource(candidatePath) != null) {
+                    jspPath = candidatePath;
+                }
+            }
+
+            if (jspPath != null) {
+                req.getRequestDispatcher(jspPath).forward(req, res);
+            } else {
+                chain.doFilter(req, res);
+            }
+        } else {
+            chain.doFilter(req, res);
+        }
+    }
+}

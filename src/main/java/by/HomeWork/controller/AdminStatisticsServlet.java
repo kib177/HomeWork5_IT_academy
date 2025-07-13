@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-import static by.HomeWork.database.Connection.getDataSource;
-
 @WebServlet("/api/admin/statistics")
 public class AdminStatisticsServlet extends HttpServlet {
     @Override
@@ -21,11 +19,11 @@ public class AdminStatisticsServlet extends HttpServlet {
             throws ServletException, IOException {
 
         ServletContext context = req.getServletContext();
-        UserRepository userRepository = new UserRepository(getDataSource());
-        MessageRepository messageRepository = new MessageRepository(getDataSource(), userRepository);
+        UserRepository userRepository = UserRepository.getInstUserRep();
+        MessageRepository msgRepository = MessageRepository.getInstMsgRepository();
 
         int totalUsers = userRepository.getAll().size();
-        int totalMessages = messageRepository.getAll().size();
+        int totalMessages = msgRepository.getAll().size();
         int activeUsers = (int) context.getAttribute("activeUsersCount");
 
         req.setAttribute("stats", Map.of(
@@ -34,6 +32,6 @@ public class AdminStatisticsServlet extends HttpServlet {
                 "activeUsers", activeUsers
         ));
 
-        req.getRequestDispatcher("/views/admin/statistics.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/views/admin/statistics.jsp").forward(req, resp);
     }
 }

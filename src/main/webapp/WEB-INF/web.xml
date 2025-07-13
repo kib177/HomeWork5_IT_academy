@@ -5,38 +5,19 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-
-    <servlet>
-        <servlet-name>RootServlet</servlet-name>
-        <servlet-class>by.HomeWork.controller.RootServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>RootServlet</servlet-name>
-        <url-pattern>/ui/</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LogServlet</servlet-name>
-        <servlet-class>by.HomeWork.controller.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogServlet</servlet-name>
-        <url-pattern>/ui/singIn</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>RegServlet</servlet-name>
-        <servlet-class>by.HomeWork.controller.UserRegistrationServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RegServlet</servlet-name>
-        <url-pattern>/ui/singUp</url-pattern>
-    </servlet-mapping>
-
     <listener>
         <listener-class>by.HomeWork.service.ActiveUsersListener</listener-class>
     </listener>
 
+
+    <filter>
+        <filter-name>jspFilter</filter-name>
+        <filter-class>by.HomeWork.filter.JspFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>jspFilter</filter-name>
+        <url-pattern>/ui/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

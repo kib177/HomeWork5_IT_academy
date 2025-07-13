@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/views/admin/*", "/api/admin/*"})
+@WebFilter(urlPatterns = {"/views/admin/*", "/api/admin/*", "/ui/admin/*"})
 public class AdminSecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
@@ -25,6 +25,6 @@ public class AdminSecurityFilter implements Filter {
                 return;
             }
         }
-        response.sendRedirect(request.getContextPath() + "/views/user/signing.jsp");
+        response.sendRedirect(request.getContextPath() + "/ui/signIn");
     }
 }

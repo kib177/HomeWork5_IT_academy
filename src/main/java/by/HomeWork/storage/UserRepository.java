@@ -1,5 +1,6 @@
 package by.HomeWork.storage;
 
+import by.HomeWork.database.ConnectionDB;
 import by.HomeWork.dto.User;
 import by.HomeWork.storage.api.AbstractRepository;
 import by.HomeWork.storage.api.IUserRepository;
@@ -9,10 +10,9 @@ import java.sql.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class UserRepository extends AbstractRepository<User> implements IUserRepository {
-    private static final ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
+    private static volatile UserRepository instUserRep;
 
     public UserRepository(DataSource dataSource) {
         super(dataSource);
@@ -49,6 +49,19 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
                 .dateRegistration(rs.getTimestamp("registration_date"))
                 .role(User.Role.valueOf(rs.getString("role")))
                 .build();
+    }
+
+    public static UserRepository getInstUserRep() {
+        if (instUserRep == null) {
+            synchronized (UserRepository.class) {
+                if (instUserRep == null) {
+                    instUserRep = new UserRepository(
+                            ConnectionDB.getInstConnectionDB().getDataSource()
+                    );
+                }
+            }
+        }
+        return instUserRep;
     }
 }
 

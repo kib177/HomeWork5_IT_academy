@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static by.HomeWork.database.Connection.getDataSource;
+import static by.HomeWork.database.ConnectionDB.getDataSource;
+import static by.HomeWork.database.ConnectionDB.getInstConnectionDB;
 
 @WebServlet("/api/message")
 public class MessageServlet extends HttpServlet {
@@ -28,19 +29,20 @@ public class MessageServlet extends HttpServlet {
         }*/
 
         User currentUser = (User) req.getSession().getAttribute("user");
-        UserRepository user = new UserRepository(getDataSource());
-        MessageRepository messageRepository = new MessageRepository(getDataSource(), user);
+        MessageRepository messageRepository = MessageRepository.getInstMsgRepository();
         List<Message> messages = messageRepository.findByRecipient(currentUser.getLogin());
         req.setAttribute("listMessage", messages);
-        req.getRequestDispatcher("/views/user/chats.jsp").forward(req, resp);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/views/user/chats.jsp").forward(req, resp);
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
 
-        UserRepository userRepository = new UserRepository(getDataSource());
-        MessageRepository messageRepository = new MessageRepository(getDataSource(), userRepository);
+        UserRepository userRepository = new UserRepository(getInstConnectionDB().getDataSource());
+        MessageRepository messageRepository = MessageRepository.getInstMsgRepository();
 
         Optional<User> recipient = userRepository.findByLogin(req.getParameter("recipient"));
         if (recipient.isEmpty()) {
@@ -54,6 +56,6 @@ public class MessageServlet extends HttpServlet {
                 .text(req.getParameter("message"))
                 .build());
 
-        resp.sendRedirect(req.getContextPath() + "/views/user/message.jsp");
+        resp.sendRedirect(req.getContextPath() + "/ui/user/message");
     }
 }

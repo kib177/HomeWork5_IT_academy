@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/views/user/*", "/api/message"})
+@WebFilter(urlPatterns = {"/api/message", "/ui/user/*"})
 public class UserSecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
@@ -20,7 +20,7 @@ public class UserSecurityFilter implements Filter {
         if (session != null && session.getAttribute("user") != null) {
             chain.doFilter(req, resp);
         } else {
-            response.sendRedirect(request.getContextPath() + "/views/user/signing.jsp");
+            response.sendRedirect(request.getContextPath() + "/ui/signIn");
         }
     }
 

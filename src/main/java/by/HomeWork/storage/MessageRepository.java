@@ -1,5 +1,6 @@
 package by.HomeWork.storage;
 
+import by.HomeWork.database.ConnectionDB;
 import by.HomeWork.dto.Message;
 import by.HomeWork.dto.User;
 
@@ -11,12 +12,13 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
-public class MessageRepository extends AbstractRepository<Message> implements IMessageRepository {
-    private final UserRepository userRepository;
 
-    public MessageRepository(DataSource dataSource, UserRepository userRepository) {
+public class MessageRepository extends AbstractRepository<Message> implements IMessageRepository {
+    private final UserRepository userRepository = UserRepository.getInstUserRep();
+    private static volatile MessageRepository instMsgRepository;
+
+    private MessageRepository(DataSource dataSource) {
         super(dataSource);
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -43,22 +45,10 @@ public class MessageRepository extends AbstractRepository<Message> implements IM
 
     private Message mapMessage(ResultSet rs) throws SQLException {
         User sender = userRepository.findByLogin(rs.getString("sender"))
-                .orElseThrow(() -> {
-                    try {
-                        return new SQLException("Sender not found: " + rs.getString("sender"));
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                    .orElseThrow(() -> new SQLException("In mapMessage not found: sender"));
 
         User recipient = userRepository.findByLogin(rs.getString("recipient"))
-                .orElseThrow(() -> {
-                    try {
-                        return new SQLException("Recipient not found: " + rs.getString("recipient"));
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                .orElseThrow(() -> new SQLException("In mapMessage not found: recipient"));
 
         return Message.builder()
                 .timeSend(rs.getTimestamp("sent_datetime"))
@@ -66,6 +56,19 @@ public class MessageRepository extends AbstractRepository<Message> implements IM
                 .recipient(recipient)
                 .text(rs.getString("text"))
                 .build();
+    }
+
+    public static MessageRepository getInstMsgRepository() {
+        if (instMsgRepository == null) { // Первая проверка (без блокировки)
+            synchronized (MessageRepository.class) { // Синхронизация по классу
+                if (instMsgRepository == null) { // Вторая проверка (внутри блокировки)
+                    instMsgRepository = new MessageRepository(
+                            ConnectionDB.getInstConnectionDB().getDataSource()
+                    );
+                }
+            }
+        }
+        return instMsgRepository;
     }
 }
 

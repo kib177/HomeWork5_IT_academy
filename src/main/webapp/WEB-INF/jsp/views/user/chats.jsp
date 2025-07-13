@@ -6,10 +6,9 @@
 <html>
 <head>
     <title>Мои сообщения</title>
-    <jsp:include page="../pipa/styleNavbar.jsp"></jsp:include>
 </head>
 <body>
-<jsp:include page="../../views/pipa/href.jsp"></jsp:include>
+<jsp:include page="../../resources/includesJSP/href.jsp"></jsp:include>
 <h2>Входящие сообщения</h2>
 <table>
     <tr>
@@ -27,6 +26,6 @@
         </tr>
     </c:forEach>
 </table>
-<p><a href="${pageContext.request.contextPath}/views/user/message.jsp">Отправить новое сообщение</a></p>
+<p><a href="${pageContext.request.contextPath}/ui/message">Отправить новое сообщение</a></p>
 </body>
 </html>

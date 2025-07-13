@@ -4,10 +4,6 @@
 <head>
     <title>Отправить сообщение</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
 
         .form-container {
             max-width: 500px;
@@ -44,14 +40,13 @@
             background: #45a049;
         }
     </style>
-    <jsp:include page="../pipa/styleNavbar.jsp"></jsp:include>
 </head>
 <body>
 <!-- Блок для отображения ошибок -->
 <c:if test="${not empty error}">
     <div class="error">${error}</div>
 </c:if>
-<jsp:include page="../../views/pipa/href.jsp"></jsp:include>
+<jsp:include page="../../resources/includesJSP/href.jsp"></jsp:include>
 <h1>Отправить сообщение</h1>
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/api/message" method="post">
