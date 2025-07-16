@@ -5,12 +5,12 @@
 <head>
     <title>Регистрация | ChatApp</title>
     <style>
-        <%@include file='../../resources/css/styleSignIn.css' %>
+        <%@include file='../../resources/css/styleSignUp.css' %>
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-<jsp:include page="../../resources/includesJSP/href.jsp"></jsp:include>
+<jsp:include page="../../resources/includesJSP/navbar.jsp"></jsp:include>
 <div class="main-content">
     <div class="register-card">
         <div class="register-icon">
@@ -60,36 +60,14 @@
         </form>
 
         <div class="links">
-            Уже есть аккаунт? <a href="${pageContext.request.contextPath}/WEB-INF/views/auth/signIn.jsp"><i
-                class="fas fa-sign-in-alt"></i> Войти</a>
+            Уже есть аккаунт? <b href="${pageContext.request.contextPath}/ui/signIn"><i
+                class="fas fa-sign-in-alt"></i> Войти</b>
         </div>
     </div>
 </div>
 
 <script>
-    // Клиентская валидация паролей
-    document.querySelector('form').addEventListener('submit', function (event) {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (password.length < 1) {
-            event.preventDefault();
-            alert('Пароль должен содержать не менее 1 символов!');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            event.preventDefault();
-            alert('Пароли не совпадают!');
-        }
-    });
-
-    // Установка минимальной и максимальной даты для рождения
-    const today = new Date().toISOString().split('T')[0];
-    const minDate = new Date();
-    minDate.setFullYear(minDate.getFullYear() - 100);
-    document.getElementById('date_birth').setAttribute('max', today);
-    document.getElementById('date_birth').setAttribute('min', minDate.toISOString().split('T')[0]);
+    <%@include file='../../resources/js/jsSignUp.js' %>
 </script>
 </body>
 </html>

@@ -25,7 +25,7 @@
                     <c:if test="${sessionScope.user.role == 'ADMIN'}">
                         <li><a href="${pageContext.request.contextPath}/ui/admin/statistics" class="nav-link">Статистика</a></li>
                     </c:if>
-                    <li><a href="${pageContext.request.contextPath}/logout" class="nav-link">Выйти</a></li>
+                    <li><a href="${pageContext.request.contextPath}/api/logout" class="nav-link">Выйти</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>

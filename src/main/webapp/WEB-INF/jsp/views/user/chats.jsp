@@ -6,9 +6,12 @@
 <html>
 <head>
     <title>Мои сообщения</title>
+    <style>
+        <%@include file='../../resources/css/styleChats.css' %>
+    </style>
 </head>
 <body>
-<jsp:include page="../../resources/includesJSP/href.jsp"></jsp:include>
+<jsp:include page="../../resources/includesJSP/navbar.jsp"></jsp:include>
 <h2>Входящие сообщения</h2>
 <table>
     <tr>
@@ -26,6 +29,6 @@
         </tr>
     </c:forEach>
 </table>
-<p><a href="${pageContext.request.contextPath}/ui/message">Отправить новое сообщение</a></p>
+<p><a href="${pageContext.request.contextPath}/ui/user/message">Отправить новое сообщение</a></p>
 </body>
 </html>

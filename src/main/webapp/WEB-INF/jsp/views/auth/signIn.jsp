@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-<jsp:include page="../../resources/includesJSP/href.jsp"></jsp:include>
+<jsp:include page="../../resources/includesJSP/navbar.jsp"></jsp:include>
 <!-- Основное содержимое -->
 <div class="main-content">
     <div class="login-card">
         <div class="login-icon">
             <i class="fas fa-lock"></i>
         </div>
-        <h2>Вход в систему</h2>
+        <h1>Вход в систему</h1>
 
         <c:if test="${not empty error}">
             <div class="error">${error}</div>
@@ -37,7 +37,7 @@
         </form>
 
         <div class="links">
-            <p>Ещё нет аккаунта? <a href="${pageContext.request.contextPath}/ui/signUp">Зарегистрируйтесь</a></p>
+            <p>Ещё нет аккаунта? <b href="${pageContext.request.contextPath}/ui/signUp">Зарегистрируйтесь</b></p>
         </div>
     </div>
 </div>

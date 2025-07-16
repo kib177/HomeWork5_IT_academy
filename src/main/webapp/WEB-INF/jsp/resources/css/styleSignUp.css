@@ -1,4 +1,5 @@
 body {
+    margin: 20px;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
     min-height: 100vh;
     display: flex;
@@ -138,7 +139,7 @@ input:focus {
     color: #666;
 }
 
-.links a {
+.links b {
     color: #4361ee;
     text-decoration: none;
     transition: all 0.3s;
@@ -147,7 +148,7 @@ input:focus {
     display: inline-block;
 }
 
-.links a:hover {
+.links b:hover {
     text-decoration: underline;
     transform: translateX(3px);
 }

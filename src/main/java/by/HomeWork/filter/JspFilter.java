@@ -21,6 +21,7 @@ public class JspFilter implements Filter {
 
             // Обработка конкретных маршрутов
             switch (path) {
+
                 case "/ui/":
                 case "/ui":
                     jspPath = "/WEB-INF/jsp/views/home.jsp";
@@ -38,9 +39,9 @@ public class JspFilter implements Filter {
                     req.getRequestDispatcher("/api/message").forward(req, res);
                     return;
                 case "/ui/admin/statistics":
-                    // Обработка через сервлет
                     req.getRequestDispatcher("/api/admin/statistics").forward(req, res);
                     return;
+
             }
 
             // Для динамических путей пользователя

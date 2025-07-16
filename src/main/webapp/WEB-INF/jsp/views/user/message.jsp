@@ -1,44 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Отправить сообщение</title>
     <style>
-
-        .form-container {
-            max-width: 500px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        button {
-            padding: 10px 15px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #45a049;
-        }
+        <%@include file='../../resources/css/styleMessage.css' %>
     </style>
 </head>
 <body>
@@ -46,7 +12,7 @@
 <c:if test="${not empty error}">
     <div class="error">${error}</div>
 </c:if>
-<jsp:include page="../../resources/includesJSP/href.jsp"></jsp:include>
+<jsp:include page="../../resources/includesJSP/navbar.jsp"></jsp:include>
 <h1>Отправить сообщение</h1>
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/api/message" method="post">
@@ -59,8 +25,8 @@
             <textarea id="message" name="message" rows="5" required></textarea>
         </div>
         <button type="submit">Отправить</button>
-
     </form>
+    <p><a href="${pageContext.request.contextPath}/ui/user/chats">Полученные сообщения</a></p>
 </div>
 </body>
 </html>

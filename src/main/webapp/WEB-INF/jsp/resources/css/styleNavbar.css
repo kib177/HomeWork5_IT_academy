@@ -5,6 +5,7 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .navbar {
     background: white;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -54,4 +55,19 @@
     color: #4361ee;
     background: #f0f5ff;
     transform: translateY(-2px);
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    transition: all 0.3s;
+}
+
+a:hover {
+    background-color: #dae0e5;
+    text-decoration: none;
 }

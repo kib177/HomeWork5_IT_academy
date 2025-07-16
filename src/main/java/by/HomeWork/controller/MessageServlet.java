@@ -1,6 +1,7 @@
 package by.HomeWork.controller;
 
 import by.HomeWork.dto.Message;
+import by.HomeWork.service.MessageService;
 import by.HomeWork.storage.MessageRepository;
 import by.HomeWork.dto.User;
 import by.HomeWork.storage.UserRepository;
@@ -19,19 +20,14 @@ import static by.HomeWork.database.ConnectionDB.getInstConnectionDB;
 
 @WebServlet("/api/message")
 public class MessageServlet extends HttpServlet {
+    private final MessageService messageService = new MessageService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        /*HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect(req.getContextPath() + "/login");
-            return;
-        }*/
 
         User currentUser = (User) req.getSession().getAttribute("user");
-        MessageRepository messageRepository = MessageRepository.getInstMsgRepository();
-        List<Message> messages = messageRepository.findByRecipient(currentUser.getLogin());
-        req.setAttribute("listMessage", messages);
+        req.setAttribute("listMessage", messageService.getUserMessages(currentUser));
 
         req.getRequestDispatcher("/WEB-INF/jsp/views/user/chats.jsp").forward(req, resp);
 
@@ -41,21 +37,17 @@ public class MessageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
 
-        UserRepository userRepository = new UserRepository(getInstConnectionDB().getDataSource());
-        MessageRepository messageRepository = MessageRepository.getInstMsgRepository();
+        try {
+            User user = (User) req.getSession().getAttribute("user");
+            messageService.sendMessage(
+                    user,
+                    req.getParameter("recipient"),
+                    req.getParameter("message")
+            );
+            resp.sendRedirect(req.getContextPath() + "/ui/user/message");
 
-        Optional<User> recipient = userRepository.findByLogin(req.getParameter("recipient"));
-        if (recipient.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Recipient not found");
-            return;
+        } catch (IllegalArgumentException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
-
-        messageRepository.save(Message.builder()
-                .sender((User) req.getSession().getAttribute("user"))
-                .recipient(recipient.get())
-                .text(req.getParameter("message"))
-                .build());
-
-        resp.sendRedirect(req.getContextPath() + "/ui/user/message");
     }
 }

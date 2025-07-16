@@ -1,6 +1,7 @@
 package by.HomeWork.controller;
 
 import by.HomeWork.dto.User;
+import by.HomeWork.service.AuthService;
 import by.HomeWork.storage.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +13,8 @@ import java.io.IOException;
 
 @WebServlet("/api/login")
 public class LoginServlet extends HttpServlet {
+    private final AuthService authService = new AuthService();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {

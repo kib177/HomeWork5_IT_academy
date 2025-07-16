@@ -3,6 +3,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 20px;
 }
 
 /* Основное содержимое */
@@ -108,13 +109,13 @@ input:focus {
     color: #666;
 }
 
-.links a {
+.links b {
     color: #4361ee;
     text-decoration: none;
     transition: color 0.3s;
     font-weight: 500;
 }
 
-.links a:hover {
+.links b:hover {
     text-decoration: underline;
 }

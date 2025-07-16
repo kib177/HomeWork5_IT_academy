@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class = "container">
-    <jsp:include page="../resources/includesJSP/href.jsp"></jsp:include>
+    <jsp:include page="../resources/includesJSP/navbar.jsp"></jsp:include>
 
 
     <header>
