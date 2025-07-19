@@ -1,6 +1,6 @@
 package by.HomeWork.database;
 
-import by.HomeWork.service.api.exception.StorageException;
+import by.HomeWork.service.api.exceptions.StorageException;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import javax.sql.DataSource;

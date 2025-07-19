@@ -3,7 +3,15 @@
 <html>
 <head>
     <title>Главная страница</title>
-
+<style>
+    body {
+        background: #f5f7fa;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+    }
+</style>
 </head>
 <body>
 <div class = "container">

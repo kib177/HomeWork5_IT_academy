@@ -1,4 +1,4 @@
-package by.HomeWork.service;
+package by.HomeWork.service.factory;
 
 import by.HomeWork.dto.User;
 

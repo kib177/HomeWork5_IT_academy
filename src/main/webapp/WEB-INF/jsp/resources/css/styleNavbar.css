@@ -57,7 +57,7 @@
     transform: translateY(-2px);
 }
 
-a {
+li a {
     color: #007bff;
     text-decoration: none;
     display: inline-block;
@@ -67,7 +67,7 @@ a {
     transition: all 0.3s;
 }
 
-a:hover {
+li a:hover {
     background-color: #dae0e5;
     text-decoration: none;
 }

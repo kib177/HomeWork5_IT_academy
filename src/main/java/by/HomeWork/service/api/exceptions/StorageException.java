@@ -1,4 +1,4 @@
-package by.HomeWork.service.api.exception;
+package by.HomeWork.service.api.exceptions;
 
 public class StorageException extends RuntimeException {
     public StorageException(String message) {

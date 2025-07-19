@@ -60,8 +60,8 @@
         </form>
 
         <div class="links">
-            Уже есть аккаунт? <b href="${pageContext.request.contextPath}/ui/signIn"><i
-                class="fas fa-sign-in-alt"></i> Войти</b>
+            Уже есть аккаунт? <a href="${pageContext.request.contextPath}/ui/signIn"><i
+                class="fas fa-sign-in-alt"></i> Войти</a>
         </div>
     </div>
 </div>

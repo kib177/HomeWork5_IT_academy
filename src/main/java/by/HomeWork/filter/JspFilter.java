@@ -44,15 +44,6 @@ public class JspFilter implements Filter {
 
             }
 
-            // Для динамических путей пользователя
-            if (jspPath == null && path.startsWith("/ui/user/")) {
-                String viewName = path.substring(9); // /ui/user/xxx -> xxx
-                String candidatePath = "/WEB-INF/jsp/views/user/" + viewName + ".jsp";
-                if (context.getResource(candidatePath) != null) {
-                    jspPath = candidatePath;
-                }
-            }
-
             if (jspPath != null) {
                 req.getRequestDispatcher(jspPath).forward(req, res);
             } else {

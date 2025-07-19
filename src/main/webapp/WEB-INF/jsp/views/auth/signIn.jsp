@@ -37,7 +37,7 @@
         </form>
 
         <div class="links">
-            <p>Ещё нет аккаунта? <b href="${pageContext.request.contextPath}/ui/signUp">Зарегистрируйтесь</b></p>
+            <p>Ещё нет аккаунта? <a href="${pageContext.request.contextPath}/ui/signUp">Зарегистрируйтесь</a></p>
         </div>
     </div>
 </div>
