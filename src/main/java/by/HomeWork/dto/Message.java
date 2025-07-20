@@ -2,7 +2,11 @@ package by.HomeWork.dto;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-
+/**
+ * Класс, представляющий сообщение между пользователями.
+ * Содержит информацию об отправителе, получателе, тексте сообщения и времени отправки.
+ * Для создания экземпляров используется паттерн Builder.
+ */
 public class Message {
     private Timestamp timeSend;
     private final User sender;
@@ -63,7 +67,11 @@ public class Message {
     public static Builder builder() {
         return new Builder();
     }
-
+    /**
+     * Внутренний класс для пошагового создания объектов Message.
+     * Позволяет установить поля сообщения и выполнить валидацию.
+     * Реализует паттерн Builder.
+     */
     public static class Builder {
         private Timestamp timeSend;
         private User sender;

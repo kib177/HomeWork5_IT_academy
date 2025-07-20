@@ -3,7 +3,10 @@ package by.HomeWork.dto;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
-
+/**
+ * Класс, представляющий сущность пользователя системы.
+ * Содержит информацию для аутентификации, персональные данные и роли.
+ */
 public class User {
     private String login;
     private String password;
@@ -96,7 +99,11 @@ public class User {
     public static Builder builder(){
         return new Builder();
     }
-
+    /**
+     * Внутренний класс для пошагового конструирования объекта User.
+     *  Позволяет установить поля пользователя и выполнить валидацию.
+     * Реализует паттерн Builder.
+     */
     public static class Builder {
         private String login;
         private String password;

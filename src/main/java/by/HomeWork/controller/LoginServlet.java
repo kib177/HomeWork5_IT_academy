@@ -1,10 +1,6 @@
 package by.HomeWork.controller;
 
-import by.HomeWork.dto.User;
 import by.HomeWork.service.AuthService;
-import by.HomeWork.storage.UserRepository;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,25 +14,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
+            throws IOException {
 
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        UserRepository userRepository = UserRepository.getInstUserRep();
-        User user = userRepository.findByLogin(login).orElse(null);
-
-        if (user == null || !user.getPassword().equals(password)) {
-            setErrorAndForward(req, resp, "Неверный логин или пароль");
-            return;
-        }
-
-        req.getSession().setAttribute("user", user);
+       authService.login(req, req.getParameter("login"), req.getParameter("password"));
         resp.sendRedirect(req.getContextPath() + "/ui/");
-    }
 
-    private void setErrorAndForward(HttpServletRequest req, HttpServletResponse resp, String message)
-            throws ServletException, IOException {
-        req.setAttribute("error", message);
-        resp.sendRedirect(req.getContextPath() + "/ui/signIn");
+
     }
 }

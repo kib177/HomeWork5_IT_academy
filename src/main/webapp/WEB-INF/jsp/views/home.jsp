@@ -21,11 +21,22 @@
     <header>
         <h1>Добро пожаловать</h1>
     </header>
+    <c:choose>
+        <c:when test="${empty sessionScope.user}">
+            <div class="content">
+                <p class="welcome"> Для дальнейшей работы войдите или зарегистрируйтесь пожалуйста </p>
+                <p>admin admin</p>
+                <p>Контекст приложения: ${pageContext.request.contextPath}</p>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <p>Добро пожаловать ${empty sessionScope.user.FIO}</p>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <p>Админа на мыло</p>
+            </c:if>
+        </c:otherwise>
+    </c:choose>
 
-    <div class="content">
-        <p class="welcome">Главная страница веб-приложения</p>
-        <p>Контекст приложения: ${pageContext.request.contextPath}</p>
-    </div>
 </div>
 </body>
 

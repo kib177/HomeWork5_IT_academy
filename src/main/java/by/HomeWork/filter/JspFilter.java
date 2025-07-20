@@ -5,7 +5,22 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
-
+/**
+ * Фильтр для обработки запросов к JSP-страницам в пути {@code /ui/*}.
+ * <p>
+ * Перенаправляет запросы на соответствующие JSP-файлы, расположенные в директории {@code /WEB-INF/jsp/views},
+ * или делегирует обработку другим сервлетам для специфических маршрутов.
+ *
+ * <p><strong>Обрабатываемые маршруты:</strong>
+ * <ul>
+ *   <li>{@code /ui}, {@code /ui/} → {@code /WEB-INF/jsp/views/home.jsp}</li>
+ *   <li>{@code /ui/signIn} → страница входа ({@code auth/signIn.jsp})</li>
+ *   <li>{@code /ui/signUp} → страница регистрации ({@code auth/signUp.jsp})</li>
+ *   <li>{@code /ui/user/messages} → страница сообщений пользователя</li>
+ *   <li>{@code /ui/user/chats} → делегирует обработку сервлету {@code /api/message}</li>
+ *   <li>{@code /ui/admin/statistics} → делегирует обработку сервлету {@code /api/admin/statistics}</li>
+ * </ul>
+ */
 @WebFilter("/ui/*")
 public class JspFilter implements Filter {
     @Override
@@ -17,11 +32,8 @@ public class JspFilter implements Filter {
 
         if (path.startsWith("/ui/")) {
             String jspPath = null;
-            ServletContext context = request.getServletContext();
 
-            // Обработка конкретных маршрутов
             switch (path) {
-
                 case "/ui/":
                 case "/ui":
                     jspPath = "/WEB-INF/jsp/views/home.jsp";
@@ -41,7 +53,6 @@ public class JspFilter implements Filter {
                 case "/ui/admin/statistics":
                     req.getRequestDispatcher("/api/admin/statistics").forward(req, res);
                     return;
-
             }
 
             if (jspPath != null) {

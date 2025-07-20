@@ -57,6 +57,11 @@
     transform: translateY(-2px);
 }
 
+div a{
+    color: #4361ee;
+}
+
+
 li a {
     color: #007bff;
     text-decoration: none;

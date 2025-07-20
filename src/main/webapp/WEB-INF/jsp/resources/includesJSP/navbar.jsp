@@ -9,7 +9,7 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo">
-            <span>ChatApp</span>
+            <a href = "${pageContext.request.contextPath}/ui/" style="text-decoration: none"> ChatApp</a>
         </div>
         <ul class="nav-links">
             <li><a href="${pageContext.request.contextPath}/ui/" class="nav-link">Главная</a></li>

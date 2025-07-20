@@ -8,8 +8,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-
-@WebFilter(urlPatterns = {"/views/admin/*", "/api/admin/*", "/ui/admin/*"})
+/**
+ * Фильтр безопасности для защиты административных ресурсов приложения.
+ * Осуществляет проверку аутентификации пользователя и наличия роли `ADMIN`
+ * перед предоставлением доступа к защищенным путям.
+ *
+ * <p>Защищаемые пути (указаны в аннотации {@code @WebFilter}):
+ * <ul>
+ *   <li>{@code /api/admin/*}</li>
+ *   <li>{@code /ui/admin/*}</li>
+ * </ul>
+ *
+ * <p>Логика работы фильтра:
+ * <ol>
+ *   <li>Проверяет наличие активной сессии и объекта пользователя в атрибутах сессии</li>
+ *   <li>Если пользователь аутентифицирован и имеет роль {@link User.Role#ADMIN} - запрос передается дальше по цепочке</li>
+ *   <li>Во всех остальных случаях перенаправляет на страницу входа ({@code /ui/signIn})</li>
+ * </ol>
+ */
+@WebFilter(urlPatterns = {"/api/admin/*", "/ui/admin/*"})
 public class AdminSecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {

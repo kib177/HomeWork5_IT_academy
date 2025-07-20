@@ -29,6 +29,6 @@
         </tr>
     </c:forEach>
 </table>
-<p><a href="${pageContext.request.contextPath}/ui/user/message">Отправить новое сообщение</a></p>
+<p><a href="${pageContext.request.contextPath}/ui/user/messages">Отправить новое сообщение</a></p>
 </body>
 </html>

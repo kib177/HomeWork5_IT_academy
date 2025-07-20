@@ -4,7 +4,11 @@ import by.HomeWork.service.api.exceptions.StorageException;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import javax.sql.DataSource;
-
+/**
+ * Класс для управления подключением к базе данных PostgreSQL.
+ * Реализует паттерн Singleton для гарантии единственного экземпляра.
+ * Использует пул соединений c3p0.
+ */
 public class ConnectionDB {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/ChatNew";
     private static final String DB_USER = "postgres";
@@ -28,7 +32,13 @@ public class ConnectionDB {
         }
     }
 
-    // синглтон начало
+
+    /**
+     * Возвращает единственный экземпляр класса.
+     * Использует double-checked locking для потокобезопасности.
+     *
+     * @return Экземпляр ConnectionDB
+     */
     public static ConnectionDB getInstConnectionDB() {
         if (instConnectionDB == null) {
             synchronized (ConnectionDB.class) {
