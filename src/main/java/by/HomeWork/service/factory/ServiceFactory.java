@@ -12,8 +12,8 @@ import by.HomeWork.service.api.IStatisticsService;
 public class ServiceFactory {
     private static final IStatisticsService statisticsService = new StatisticsService();
     private static final IAuthService authService = new AuthService();
-    private static final IMessageService messageService = new MessageService();
-    private static final IRegistrationService userService = new RegistrationService();
+    private static final IMessageService messageService = new MessageService(new MessageFactory());
+    private static final IRegistrationService userService = new RegistrationService(new UserFactory());
 
     public static IAuthService getAuthService() {
         return authService;

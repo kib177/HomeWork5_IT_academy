@@ -12,7 +12,11 @@ import java.sql.Date;
  * Использует {@link UserFactory} для создания объектов пользователей.
  */
 public class RegistrationService implements IRegistrationService {
-    private final UserFactory userFactory = new UserFactory();
+    private final UserFactory userFactory;
+
+    public RegistrationService(UserFactory userFactory) {
+        this.userFactory = userFactory;
+    }
 /**
  * Регистрирует нового пользователя в системе.
  * Создает объект пользователя с ролью {@link User.Role#USER} через {@link UserFactory},

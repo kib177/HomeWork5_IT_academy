@@ -15,7 +15,11 @@ import java.util.Optional;
  * {@link MessageRepository} для хранения сообщений и {@link UserRepository} для доступа к данным пользователей.
  */
 public class MessageService implements IMessageService {
-    private final MessageFactory messageFactory = new MessageFactory();
+    private final MessageFactory messageFactory;
+
+    public MessageService(MessageFactory messageFactory) {
+        this.messageFactory = messageFactory;
+    }
     /**
      * Возвращает список входящих сообщений для указанного пользователя.
      * Поиск сообщений осуществляется по логину пользователя-получателя.
