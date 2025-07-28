@@ -2,6 +2,7 @@ package by.HomeWork.controller;
 
 import by.HomeWork.service.StatisticsService;
 import by.HomeWork.service.api.IStatisticsService;
+import by.HomeWork.service.factory.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet("/api/admin/statistics")
 public class AdminStatisticsServlet extends HttpServlet {
-    private final IStatisticsService statisticsService = new StatisticsService();
+    private final IStatisticsService statisticsService = ServiceFactory.getStatisticsService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

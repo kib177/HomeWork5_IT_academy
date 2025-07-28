@@ -3,6 +3,7 @@ package by.HomeWork.controller;
 import by.HomeWork.service.MessageService;
 import by.HomeWork.dto.User;
 import by.HomeWork.service.api.IMessageService;
+import by.HomeWork.service.factory.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 @WebServlet("/api/message")
 public class MessageServlet extends HttpServlet {
-    private final IMessageService messageService = new MessageService();
+    private final IMessageService messageService = ServiceFactory.getMessageService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
