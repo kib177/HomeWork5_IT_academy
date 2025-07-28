@@ -1,6 +1,7 @@
 package by.HomeWork.controller;
 
 import by.HomeWork.service.AuthService;
+import by.HomeWork.service.api.IAuthService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet("/api/logout")
 public class LogoutServlet extends HttpServlet {
-    private final AuthService authService = new AuthService();
+    private final IAuthService authService = new AuthService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {

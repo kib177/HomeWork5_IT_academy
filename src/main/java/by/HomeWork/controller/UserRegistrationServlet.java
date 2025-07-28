@@ -1,6 +1,7 @@
 package by.HomeWork.controller;
 
 import by.HomeWork.service.RegistrationService;
+import by.HomeWork.service.api.IRegistrationService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import java.sql.Date;
 
 @WebServlet("/api/user")
 public class UserRegistrationServlet extends HttpServlet {
-    private final RegistrationService userService = new RegistrationService();
+    private final IRegistrationService userService = new RegistrationService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

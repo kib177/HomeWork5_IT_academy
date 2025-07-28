@@ -1,4 +1,4 @@
-package by.HomeWork.service;
+package by.HomeWork.controller.filter;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.annotation.WebListener;

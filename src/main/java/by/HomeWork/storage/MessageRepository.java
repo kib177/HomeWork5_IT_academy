@@ -84,9 +84,9 @@ public class MessageRepository extends AbstractRepository<Message> implements IM
      * @return Экземпляр {@link MessageRepository}.
      */
     public static MessageRepository getInstMsgRepository() {
-        if (instMsgRepository == null) { // Первая проверка (без блокировки)
-            synchronized (MessageRepository.class) { // Синхронизация по классу
-                if (instMsgRepository == null) { // Вторая проверка (внутри блокировки)
+        if (instMsgRepository == null) {
+            synchronized (MessageRepository.class) {
+                if (instMsgRepository == null) {
                     instMsgRepository = new MessageRepository(
                             ConnectionDB.getInstConnectionDB().getDataSource()
                     );

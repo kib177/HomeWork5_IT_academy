@@ -1,4 +1,4 @@
-package by.HomeWork.filter;
+package by.HomeWork.controller.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
