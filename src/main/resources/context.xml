@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="org.postgresql.Driver"/>
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/ChatNew"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="1998177"/>
+    </bean>
+
+    <bean id="messageMapper" class="by.IT_academy.HomeWork.repository.mapper.MessageMapper">
+        <constructor-arg name = "userRepository" ref="userRepository"/>
+    </bean>
+
+    <bean id="userMapper" class="by.IT_academy.HomeWork.repository.mapper.UserMapper"/>
+
+    <bean id="messageRepository" class="by.IT_academy.HomeWork.repository.MessageRepository">
+        <constructor-arg name="dataSource" ref="dataSource" />
+        <constructor-arg name="messageMapper" ref="messageMapper" />
+    </bean>
+    
+    <bean id="userRepository" class="by.IT_academy.HomeWork.repository.UserRepository">
+        <constructor-arg name = "dataSource" ref="dataSource"/>
+        <constructor-arg name = "userMapper" ref="userMapper"/>
+    </bean>
+
+
+
+
+
+
