@@ -1,7 +1,7 @@
 package by.IT_academy.HomeWork.controller;
 
-import by.IT_academy.HomeWork.dto.User;
-import by.IT_academy.HomeWork.service.ServiceFactory;
+import by.IT_academy.HomeWork.core.ContextFactory;
+import by.IT_academy.HomeWork.core.dto.User;
 import by.IT_academy.HomeWork.service.api.IMessageService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,8 +15,10 @@ import java.io.IOException;
 public class MessageServlet extends HttpServlet {
     private IMessageService messageService;
 
-    public void init() {
-        messageService = ServiceFactory.getMessageService();
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        messageService = ContextFactory.getBean(IMessageService.class);
     }
 
     @Override

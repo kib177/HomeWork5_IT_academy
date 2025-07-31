@@ -1,8 +1,7 @@
 package by.IT_academy.HomeWork.repository.mapper;
 
-import by.IT_academy.HomeWork.dto.Message;
-import by.IT_academy.HomeWork.dto.User;
-import by.IT_academy.HomeWork.repository.RepositoryFactory;
+import by.IT_academy.HomeWork.core.dto.Message;
+import by.IT_academy.HomeWork.core.dto.User;
 import by.IT_academy.HomeWork.repository.api.IMessageMapper;
 import by.IT_academy.HomeWork.repository.api.IUserRepository;
 
@@ -10,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MessageMapper implements IMessageMapper {
-    private static volatile MessageMapper instMsgMapper;
     private final IUserRepository userRepository;
 
     public MessageMapper(IUserRepository userRepository) {
@@ -36,16 +34,5 @@ public class MessageMapper implements IMessageMapper {
                 .recipient(recipient)
                 .text(rs.getString("text"))
                 .build();
-    }
-
-    public static MessageMapper getInstMessageMapper() {
-        if (instMsgMapper == null) {
-            synchronized (UserMapper.class) {
-                if (instMsgMapper == null) {
-                    instMsgMapper = new MessageMapper(RepositoryFactory.getUserRepository());
-                }
-            }
-        }
-        return instMsgMapper;
     }
 }

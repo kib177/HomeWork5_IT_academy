@@ -1,7 +1,7 @@
 package by.IT_academy.HomeWork.service;
 
-import by.IT_academy.HomeWork.dto.Message;
-import by.IT_academy.HomeWork.dto.User;
+import by.IT_academy.HomeWork.core.dto.Message;
+import by.IT_academy.HomeWork.core.dto.User;
 import by.IT_academy.HomeWork.service.api.IMessageService;
 import by.IT_academy.HomeWork.repository.MessageRepository;
 import by.IT_academy.HomeWork.repository.UserRepository;

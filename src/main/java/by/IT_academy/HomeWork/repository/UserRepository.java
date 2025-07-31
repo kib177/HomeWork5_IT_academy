@@ -1,11 +1,9 @@
 package by.IT_academy.HomeWork.repository;
 
-import by.IT_academy.HomeWork.repository.connectionDB.ConnectionDB;
-import by.IT_academy.HomeWork.dto.User;
+import by.IT_academy.HomeWork.core.dto.User;
 import by.IT_academy.HomeWork.repository.api.AbstractRepository;
 import by.IT_academy.HomeWork.repository.api.IUserMapper;
 import by.IT_academy.HomeWork.repository.api.IUserRepository;
-import by.IT_academy.HomeWork.repository.mapper.UserMapper;
 
 import javax.sql.DataSource;
 
@@ -18,7 +16,6 @@ import java.util.Optional;
  * Наследует базовую функциональность из {@link AbstractRepository} и реализует {@link IUserRepository}.
  */
 public class UserRepository extends AbstractRepository<User> implements IUserRepository {
-    private static volatile UserRepository instUserRep;
     private final IUserMapper userMapper;
     /**
      * Конструктор с внедрением источника данных.
@@ -62,26 +59,6 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
     public List<User> getAll() {
         return query("SELECT * FROM users",
                 userMapper::mapUser);
-    }
-
-
-    /**
-     * Возвращает единственный экземпляр класса (реализация Singleton).
-     * Использует двойную проверку для потокобезопасности.
-     * @return Экземпляр {@link UserRepository}.
-     */
-    public static UserRepository getInstUserRep() {
-        if (instUserRep == null) {
-            synchronized (UserRepository.class) {
-                if (instUserRep == null) {
-                    instUserRep = new UserRepository(
-                            ConnectionDB.getInstConnectionDB().getDataSource(),
-                            UserMapper.getInstUserMapper()
-                    );
-                }
-            }
-        }
-        return instUserRep;
     }
 }
 

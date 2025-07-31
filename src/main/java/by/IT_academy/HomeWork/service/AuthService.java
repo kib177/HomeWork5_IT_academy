@@ -1,6 +1,6 @@
 package by.IT_academy.HomeWork.service;
 
-import by.IT_academy.HomeWork.dto.User;
+import by.IT_academy.HomeWork.core.dto.User;
 import by.IT_academy.HomeWork.service.api.IAuthService;
 import by.IT_academy.HomeWork.repository.api.IUserRepository;
 import jakarta.servlet.http.HttpSession;

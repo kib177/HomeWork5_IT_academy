@@ -1,7 +1,8 @@
 package by.IT_academy.HomeWork.controller;
 
-import by.IT_academy.HomeWork.service.ServiceFactory;
+import by.IT_academy.HomeWork.core.ContextFactory;
 import by.IT_academy.HomeWork.service.api.IAuthService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,8 +14,10 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     private IAuthService authService;
 
-    public void init() {
-        authService = ServiceFactory.getAuthService();
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        authService = ContextFactory.getBean(IAuthService.class);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

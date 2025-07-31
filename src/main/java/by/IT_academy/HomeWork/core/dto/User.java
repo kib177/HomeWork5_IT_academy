@@ -1,4 +1,4 @@
-package by.IT_academy.HomeWork.dto;
+package by.IT_academy.HomeWork.core.dto;
 
 import java.sql.Date;
 import java.sql.Timestamp;

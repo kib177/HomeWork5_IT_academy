@@ -2,8 +2,6 @@ package by.IT_academy.HomeWork.service;
 
 import by.IT_academy.HomeWork.repository.api.IUserRepository;
 import by.IT_academy.HomeWork.service.api.IStatisticsService;
-import by.IT_academy.HomeWork.repository.MessageRepository;
-import by.IT_academy.HomeWork.repository.UserRepository;
 import by.IT_academy.HomeWork.repository.api.IMessageRepository;
 
 import java.util.Map;

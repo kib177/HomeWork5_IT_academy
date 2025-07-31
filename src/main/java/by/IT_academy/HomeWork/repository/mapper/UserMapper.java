@@ -1,13 +1,12 @@
 package by.IT_academy.HomeWork.repository.mapper;
 
-import by.IT_academy.HomeWork.dto.User;
+import by.IT_academy.HomeWork.core.dto.User;
 import by.IT_academy.HomeWork.repository.api.IUserMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper implements IUserMapper {
-    private static volatile UserMapper instUserMapper;
     /**
      * Преобразует строку {@link ResultSet} в объект {@link User}.
      * @param rs Набор результатов SQL-запроса.
@@ -23,16 +22,5 @@ public class UserMapper implements IUserMapper {
                 .dateRegistration(rs.getTimestamp("registration_date"))
                 .role(User.Role.valueOf(rs.getString("role")))
                 .build();
-    }
-
-    public static UserMapper getInstUserMapper() {
-        if (instUserMapper == null) {
-            synchronized (UserMapper.class) {
-                if (instUserMapper == null) {
-                    instUserMapper = new UserMapper();
-                }
-            }
-        }
-        return instUserMapper;
     }
 }

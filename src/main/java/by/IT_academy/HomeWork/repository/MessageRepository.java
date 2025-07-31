@@ -1,12 +1,9 @@
 package by.IT_academy.HomeWork.repository;
 
 import by.IT_academy.HomeWork.repository.api.IMessageMapper;
-import by.IT_academy.HomeWork.repository.connectionDB.ConnectionDB;
-import by.IT_academy.HomeWork.dto.Message;
-
+import by.IT_academy.HomeWork.core.dto.Message;
 import by.IT_academy.HomeWork.repository.api.AbstractRepository;
 import by.IT_academy.HomeWork.repository.api.IMessageRepository;
-import by.IT_academy.HomeWork.repository.mapper.MessageMapper;
 
 
 import javax.sql.DataSource;
@@ -18,11 +15,10 @@ import java.util.List;
  * и реализует {@link IMessageRepository}.
  */
 public class MessageRepository extends AbstractRepository<Message> implements IMessageRepository {
-    private static volatile MessageRepository instMsgRepository;
     private final IMessageMapper messageMapper;
 
     /**
-     * Приватный конструктор с внедрением источника данных.
+     * Конструктор с внедрением источника данных.
      * @param dataSource Источник данных для подключения к БД.
      */
     public MessageRepository(DataSource dataSource, IMessageMapper messageMapper) {
@@ -63,25 +59,6 @@ public class MessageRepository extends AbstractRepository<Message> implements IM
         return query("SELECT * FROM messages WHERE recipient = ?",
                 messageMapper::mapMessage,
                 recipient);
-    }
-
-    /**
-     * Возвращает единственный экземпляр класса (реализация Singleton).
-     * Использует двойную проверку для потокобезопасности.
-     * @return Экземпляр {@link MessageRepository}.
-     */
-    public static MessageRepository getInstMsgRepository() {
-        if (instMsgRepository == null) {
-            synchronized (MessageRepository.class) {
-                if (instMsgRepository == null) {
-                    instMsgRepository = new MessageRepository(
-                            ConnectionDB.getInstConnectionDB().getDataSource(),
-                            MessageMapper.getInstMessageMapper()
-                    );
-                }
-            }
-        }
-        return instMsgRepository;
     }
 }
 

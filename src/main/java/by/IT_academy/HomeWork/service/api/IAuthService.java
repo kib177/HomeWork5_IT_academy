@@ -1,6 +1,6 @@
 package by.IT_academy.HomeWork.service.api;
 
-import by.IT_academy.HomeWork.dto.User;
+import by.IT_academy.HomeWork.core.dto.User;
 import jakarta.servlet.http.HttpSession;
 
 public interface IAuthService {

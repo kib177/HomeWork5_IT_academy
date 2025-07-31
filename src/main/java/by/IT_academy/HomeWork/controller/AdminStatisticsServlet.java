@@ -1,6 +1,6 @@
 package by.IT_academy.HomeWork.controller;
 
-import by.IT_academy.HomeWork.service.ServiceFactory;
+import by.IT_academy.HomeWork.core.ContextFactory;
 import by.IT_academy.HomeWork.service.api.IStatisticsService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,8 +14,10 @@ import java.io.IOException;
 public class AdminStatisticsServlet extends HttpServlet {
     private IStatisticsService statisticsService;
 
-    public void init() {
-        statisticsService = ServiceFactory.getStatisticsService();
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        statisticsService = ContextFactory.getBean(IStatisticsService.class);
     }
 
     @Override

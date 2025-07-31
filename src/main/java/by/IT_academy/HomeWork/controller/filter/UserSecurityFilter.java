@@ -1,6 +1,6 @@
 package by.IT_academy.HomeWork.controller.filter;
 
-import by.IT_academy.HomeWork.dto.User;
+import by.IT_academy.HomeWork.core.dto.User;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

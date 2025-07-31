@@ -1,7 +1,8 @@
 package by.IT_academy.HomeWork.controller;
 
+import by.IT_academy.HomeWork.core.ContextFactory;
 import by.IT_academy.HomeWork.service.api.IRegistrationService;
-import by.IT_academy.HomeWork.service.ServiceFactory;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,8 +17,9 @@ public class UserRegistrationServlet extends HttpServlet {
     private IRegistrationService userService;
 
     @Override
-    public void init() {
-        userService = ServiceFactory.getRegistrationService();
+    public void init() throws ServletException {
+        super.init();
+        userService = ContextFactory.getBean(IRegistrationService.class);
     }
 
     @Override
